@@ -1,0 +1,58 @@
+.roulette-container {
+	width: 80%;
+	position: relative;
+	display: block;
+	margin: 0 auto;
+}
+
+.race-category {
+	display: inline-block;
+	/*padding: 50px 100px;*/
+	margin: 0 1%;
+	width: 30%;
+	vertical-align: top;
+}
+
+.race-category-title {
+	text-align: center;
+	line-height: 50px;
+	border-bottom: 1px solid #d3d3d3;
+}
+
+/* to add line underneath titles since border-bottom looks bad
+.race-category-title:after {
+	height: 2px;
+	margin-top: 5px;
+	background-color: #d3d3d3;
+    position: absolute;
+    content: "";
+    top: 50%;
+} */
+
+h4 {
+	font-family: 'Helvetica Neue', Helvetica, sans-serif; 	
+	font-weight: 300;
+	letter-spacing: 0.5px;
+}
+
+.spinner-state-name {
+	font-family: 'Helvetica Neue', Helvetica, sans-serif; 	
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	position: absolute;
+	top: 41%; /* fix with transform -50% */
+}
+
+.small-spinner {
+	display: inline-block;
+	position: relative;
+}
+
+.small-spinner:nth-child(odd) {
+	padding: 10px 0;
+	float:right;
+}
+
+.small-spinner:nth-child(even) {
+	padding: 10px 0;
+}
