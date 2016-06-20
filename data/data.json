@@ -1,0 +1,31 @@
+{
+	"states": [
+		{
+			"abbreviation": "WA",
+			"state": "Washington",
+			"race-category": "democratic", 
+			"value" : [40, 40, 20]
+		}, {
+			"abbreviation": "OR",
+			"state": "Oregon",
+			"race-category": "republican",
+			"value" : [15, 85, 0]
+		}, {
+			"abbreviation": "CA",
+			"state": "California",
+			"race-category": "competetive",
+			"value" : [40, 60, 0]
+		}, {
+			"abbreviation": "PA",
+			"state": "Pennsylvania",
+			"race-category": "competetive",
+			"value" : [15, 60, 25]
+		},
+		{
+			"abbreviation": "VA",
+			"state": "Virginia",
+			"race-category": "competetive",
+			"value" : [75, 25, 0]
+		}
+	]
+}

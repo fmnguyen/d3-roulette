@@ -1,0 +1,96 @@
+{
+	"states": [
+		{
+			"abbreviation": "WA",
+			"state": "Washington",
+			"race-category": "democrat", 
+			"value" : [
+				{
+					"party": "democrat",
+					"probability": 40
+				},
+				{
+					"party": "republican",
+					"probability": 40
+				},
+				{
+					"party": "other",
+					"probability": 20
+				}
+			]
+		}, {
+			"abbreviation": "OR",
+			"state": "Oregon",
+			"race-category": "republican",
+			"value" : [
+				{
+					"party": "democrat",
+					"probability": 15
+				},
+				{
+					"party": "republican",
+					"probability": 85
+				},
+				{
+					"party": "other",
+					"probability": 0
+				}
+			]
+		}, {
+			"abbreviation": "CA",
+			"state": "California",
+			"race-category": "competetive",
+			"value" : [
+				{
+					"party": "democrat",
+					"probability": 40
+				},
+				{
+					"party": "republican",
+					"probability": 60
+				},
+				{
+					"party": "other",
+					"probability": 0
+				}
+			]
+		}, {
+			"abbreviation": "PA",
+			"state": "Pennsylvania",
+			"race-category": "competetive",
+			"value" : [
+				{
+					"party": "democrat",
+					"probability": 15
+				},
+				{
+					"party": "republican",
+					"probability": 60
+				},
+				{
+					"party": "other",
+					"probability": 25
+				}
+			]
+		},
+		{
+			"abbreviation": "VA",
+			"state": "Virginia",
+			"race-category": "competetive",
+			"value" : [
+				{
+					"party": "democrat",
+					"probability": 75
+				},
+				{
+					"party": "republican",
+					"probability": 25
+				},
+				{
+					"party": "other",
+					"probability": 0
+				}
+			]
+		}
+	]
+}	

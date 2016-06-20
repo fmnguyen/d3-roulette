@@ -37,10 +37,12 @@ h4 {
 
 .spinner-state-name {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif; 	
-	font-weight: 700;
+	font-weight: 300;
 	letter-spacing: 0.5px;
+	color: #333;
 	position: absolute;
-	top: 41%; /* fix with transform -50% */
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 .small-spinner {
@@ -55,4 +57,21 @@ h4 {
 
 .small-spinner:nth-child(even) {
 	padding: 10px 0;
+}
+
+.race-result {
+	border: #ccc 1px solid;
+	height: 8px;
+	width: 8px;
+	border-radius: 8px;
+	position: absolute;
+	left: 35px;
+	top: 50%;
+	transform: translate(0, -50%);
+	transition: all 0.3s ease;
+}
+
+.spinner-svg-needle {
+	position: absolute;
+	left: 0;
 }
