@@ -5,6 +5,10 @@
 	margin: 0 auto;
 }
 
+.spinners-container {
+	margin-top: 100px;
+}
+
 .race-category {
 	display: inline-block;
 	/*padding: 50px 100px;*/
@@ -48,6 +52,7 @@ h4 {
 .small-spinner {
 	display: inline-block;
 	position: relative;
+	width: 50%;
 }
 
 .small-spinner:nth-child(odd) {
@@ -71,7 +76,29 @@ h4 {
 	transition: all 0.3s ease;
 }
 
+.race-total, .race-totals {
+	font-family: 'Helvetica Neue', Helvetica, sans-serif; 	
+	font-weight: 700;
+	font-size: 24px;
+	letter-spacing: 0.5px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.race-total--dem {
+	color: #405d98;
+}
+
+.race-total--rep {
+	color: #c40f3a;
+}
+
 .spinner-svg-needle {
 	position: absolute;
 	left: 0;
+}
+
+.spinner-svg-guides {
+	position: absolute; 
+	left:0;
 }

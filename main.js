@@ -14,6 +14,7 @@ var randomDuration;
 var numRotation = 7;  // rotations you want each spinner to complete 
 var durationStep = 50; // steps are in ms 
 var offsetAngle = {};
+var raceTotals = {'democrat': 0, 'republican': 0, 'other': 0}
 
 var width = containerWidth / 2 - margin.right, // or 100 for testing
     height = 85, // height is actually what determines the size of our spinner (since it is always smaller than width)
@@ -25,10 +26,9 @@ var color = d3.scale.ordinal()
 
 var arc = d3.svg.arc()
     .outerRadius(radius - 10)
-    .innerRadius(radius - 35);
+    .innerRadius(radius - 30);
 
 var pie = d3.layout.pie()
-    //.padAngle(-.01)
     .value(function(d){ return d.probability })
     .sort(null);
 
@@ -79,14 +79,15 @@ d3.json('/data/test.json', function(error, data) {
         // appends a new svg for each state
         svg = d3.select('#' + data.states[i].abbreviation)
             .append('svg')
-            .attr('class', 'spinner-svg')
+            .attr('class', 'spinner-svg spinner-svg-body')
             .attr({'width': width, 'height': height}) 
 
         // draws the pie with each states values
         g = svg.selectAll(".arc").data(pie(data.states[i].value))
             .enter().append('g')
             .attr('class', 'arc')
-            .attr('data-key', data.states[i].abbreviation).attr("transform", "translate(" + (width / 2 + 30)  + "," + height / 2 + ")");
+            .attr('data-key', data.states[i].abbreviation)
+            .attr("transform", "translate(" + (width / 2 + 30)  + "," + height / 2 + ")");
         
         // polyfill for each arc color    
         g.append("path")
@@ -98,13 +99,21 @@ d3.json('/data/test.json', function(error, data) {
             .attr('class', 'spinner-svg spinner-svg-needle')
             .attr({'width': width, 'height': height});
 
-        svgNeedle.append('g')
+        needleGroup = svgNeedle.append('g')
             .attr('class', 'needle')
             .append('circle')
                 .attr('r', 2)
-                .attr('cx', 30)
-                .attr('cy', 7)
+                .attr('cx', 65)
+                .attr('cy', height / 2 + 1)
                 .attr('fill', '#ddd')
+
+        svgNeedle.select('.needle').append('path')
+            .attr('d', 'M25.09,30.1c0,0-17.12-3.85-17.47-3.85c-2.17,0-3.93,1.76-3.93,3.93s1.76,3.93,3.93,3.93C7.97,34.11,25.09,30.1,25.09,30.1z')
+            .attr('fill', '#bbb')
+            .attr('stroke', 'white')
+            .attr('stroke-width', 0.5)
+
+        drawGuides(data.states[i].abbreviation);
 
     }
 });
@@ -112,6 +121,10 @@ d3.json('/data/test.json', function(error, data) {
 // Choose each party's affiliation / win on button click, then start all the animations
 // on animation end, update the winners and final count for each party 
 $('.spin-button').click(function(e) {
+
+    raceTotals.democrat = 0;
+    raceTotals.republican = 0;
+    raceTotals.other = 0;
 
     $('.small-spinner').each(function() {
 
@@ -132,9 +145,19 @@ $('.spin-button').click(function(e) {
                 return temp.party; 
             });
         console.log(this.getAttribute('id') + ": " + chosen);
+        raceTotals[chosen]++;
+        console.log(raceTotals)
     }) 
 
+    /*
     // start our ticker animation
+    d3.selectAll('.needle')
+        .transition()
+        .duration(5000) // this will have to be getting a value from a map
+        .delay(25)      // same with this too
+        .ease('cubic-in-out')
+        .attrTween('transform', angleTweenNeedle)
+    */
 
     // start our spinning animation
     d3.selectAll('.arc')
@@ -147,6 +170,47 @@ $('.spin-button').click(function(e) {
 
 });
 
+function drawGuides($id) {
+
+    var d = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10] // dummy data to split the pie 10 ways
+    var temp_pie = d3.layout.pie()
+        .value(function(d){ return d })
+        .sort(null);
+    var temp_arc = d3.svg.arc()
+        .outerRadius(radius - 19)
+        .innerRadius(radius - 30);
+
+    var s = d3.select('#' + $id)
+        .append('svg')
+        .attr('class', 'spinner-svg spinner-svg-guides')
+        .attr({'width': width, 'height': height}) 
+
+    // draws the pie with each states values
+    var group = s.selectAll(".arc").data(temp_pie(d))
+        .enter().append('g')
+        .attr('class', 'arc guide')
+        .attr('data-key', $id)
+        .attr("transform", "translate(" + (width / 2 + 30)  + "," + height / 2 + ")");
+
+    // polyfill for each arc color    
+    group.append("path")
+        .attr("d", temp_arc)
+        .style("fill", 'transparent');
+
+    s.append('g')
+        .attr('class', 'center')
+        .append('circle')
+            .attr('r', 2)
+            .attr('cx', (width / 2 + 30))
+            .attr('cy', (height / 2 + 1))
+            .attr('fill', '#ddd')
+}
+
+
+/**
+ * Iterates for each .race-result div and fills the colors in dependent on the race results
+ * Called when the rotation for each arc ends
+ */
 function fillCircle() {
     $('.small-spinner').each(function() {
         switch (this.getAttribute('data-race-result')) {
@@ -165,10 +229,17 @@ function fillCircle() {
             "border": fillColor
         })
     })
-}
 
-function startSpin() {
-
+    $('.race-total').each(function() {
+        switch ($(this).hasClass('race-total--dem')) {
+            case true:
+                $(this).find('.race-total-value').text(raceTotals['democrat'])                
+                break;
+            case false:
+                $(this).find('.race-total-value').text(raceTotals['republican'])      
+                break;    
+        }
+    });
 }
 
 /**
@@ -181,7 +252,7 @@ function startSpin() {
 function calculateDelay(d, i) {
     // if the index % 3 = 0, we know that we're iterating on the next arcs of the next spinner
     // therefore we want to set the delay to a new random number
-    if(i % 3 === 0)  // since we start at i = 0, this will intialize our random num
+    if(i % 13 === 0)  // since we start at i = 0, this will intialize our random num
         randomDelay = (Math.floor(Math.random() * 5) + 1) * 25; 
     return randomDelay;
 }
@@ -194,17 +265,17 @@ function calculateDelay(d, i) {
  * @return int   time in ms of how long the spinning animation should last
  */
 function calculateDuration(d, i) {
-    if(i % 3 === 0)
+    if(i % 13 === 0)
         randomDuration = (Math.floor(Math.random() * 15) + 1) * durationStep + 3500 // we want this to be between 3500-5000
     return randomDuration;
 }
 
 /**
  * Computes the keyframes between two points
- * Makes sure that the ending rotational position of the spinner is accurate to the ticker
+ *     Makes sure that the ending rotational position of the spinner is accurate to the ticker
  * @param  int d  data value of the arc that we are iterating on 
  * @param  int i  index of the arc that is currently iterating over
- * @return tweenFunction   
+ * @return tweenFunction that interpolates angles between the start/end point
  */
 function angleTween(d, i) {
     // to calculate the end rotation of the spinner: 
