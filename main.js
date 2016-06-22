@@ -1,7 +1,6 @@
 /**
  * TODO:
- *     Add ticker + ticker animation
- *     Add guides (10 tick marks)
+ *     ticker animation
  *     Window.resize function that redraws on resize 
  */
 
@@ -11,8 +10,11 @@ var margin = {top: 40, right: 10, bottom:20, left: 10 }
 // Control Variables for the rotation animation
 var randomDelay;
 var randomDuration;
-var numRotation = 7;  // rotations you want each spinner to complete 
+var minTime = 6000;    // minimum amount of time you want the animation to spin for 
+var numRotation = 10;  // rotations you want each spinner to complete 
 var durationStep = 50; // steps are in ms 
+
+// Other initializing variables
 var offsetAngle = {};
 var raceTotals = {'democrat': 0, 'republican': 0, 'other': 0}
 
@@ -94,25 +96,37 @@ d3.json('/data/test.json', function(error, data) {
             .attr("d", arc)
             .style("fill", function(d, i) { return color(i); });
 
+        // appends a new svg container that will hold our ticker/needle
         var svgNeedle = d3.select('#' + data.states[i].abbreviation)
             .append('svg')
             .attr('class', 'spinner-svg spinner-svg-needle')
-            .attr({'width': width, 'height': height});
+            .attr({'width': width / 2, 'height': height / 2})
+            .style('left', (width / 4 - 22.5 + 7))
+            .style('top', (height / 2 - 10 ))
 
-        needleGroup = svgNeedle.append('g')
+        // group element and circle of the needle that we are going to rotate with our animation function
+        svgNeedle = svgNeedle.append('g')
             .attr('class', 'needle')
-            .append('circle')
-                .attr('r', 2)
-                .attr('cx', 65)
-                .attr('cy', height / 2 + 1)
-                .attr('fill', '#ddd')
+            .attr('transform', 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ')rotate(' + (0) + ')')
+            //.attr('transform-origin', 'center center 0') // this sets where we are rotating our needle from
 
-        svgNeedle.select('.needle').append('path')
-            .attr('d', 'M25.09,30.1c0,0-17.12-3.85-17.47-3.85c-2.17,0-3.93,1.76-3.93,3.93s1.76,3.93,3.93,3.93C7.97,34.11,25.09,30.1,25.09,30.1z')
+        // draws the larger needle path
+        svgNeedle.append('path')
+            .attr('d', 'm24.00,30.1c0,0-17.12-3.85-17.47-3.85c-2.17,0-3.93,1.76-3.93,3.93s1.76,3.93,3.93,3.93C7.97,34.11,25.09,30.1,25.09,30.1z')
             .attr('fill', '#bbb')
             .attr('stroke', 'white')
             .attr('stroke-width', 0.5)
+            .attr('transform', "translate(" + (-3) + "," + (-26) + ")");
 
+        svgNeedle.append('circle')
+                .attr('r', 2)
+                .attr('cx', 4) // this 4 offsets the circle so that it is the 'eye' of the needle
+                .attr('cy', 4)
+                // .attr('cx', 65)
+                // .attr('cy', height / 2 + 1)
+                .attr('fill', '#ddd')
+
+        // draws the 10 marks that divide the circle
         drawGuides(data.states[i].abbreviation);
 
     }
@@ -122,9 +136,13 @@ d3.json('/data/test.json', function(error, data) {
 // on animation end, update the winners and final count for each party 
 $('.spin-button').click(function(e) {
 
+    // Resets state to original state
     raceTotals.democrat = 0;
     raceTotals.republican = 0;
     raceTotals.other = 0;
+    $('.race-total').each(function() {
+        $(this).find('.race-total-value').text('??');
+    })
 
     $('.small-spinner').each(function() {
 
@@ -146,10 +164,8 @@ $('.spin-button').click(function(e) {
             });
         console.log(this.getAttribute('id') + ": " + chosen);
         raceTotals[chosen]++;
-        console.log(raceTotals)
     }) 
 
-    /*
     // start our ticker animation
     d3.selectAll('.needle')
         .transition()
@@ -157,7 +173,6 @@ $('.spin-button').click(function(e) {
         .delay(25)      // same with this too
         .ease('cubic-in-out')
         .attrTween('transform', angleTweenNeedle)
-    */
 
     // start our spinning animation
     d3.selectAll('.arc')
@@ -170,6 +185,17 @@ $('.spin-button').click(function(e) {
 
 });
 
+function styleTween(transition, name, value) {
+  transition.styleTween(name, function() {
+    return d3.interpolate(this.style[name], value);
+  });
+}
+
+/**
+ * draws the 10 even marks for the pie to divide the spinner
+ * also draws the center circle in the spinner 
+ * @param  string   $id   the state abbreviation that is targeted to draw the guide for
+ */
 function drawGuides($id) {
 
     var d = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10] // dummy data to split the pie 10 ways
@@ -197,15 +223,15 @@ function drawGuides($id) {
         .attr("d", temp_arc)
         .style("fill", 'transparent');
 
+    // appends the circle that is at the center of the spinner (exists only for aesthetics)
     s.append('g')
         .attr('class', 'center')
         .append('circle')
-            .attr('r', 2)
+            .attr('r', 3)
             .attr('cx', (width / 2 + 30))
             .attr('cy', (height / 2 + 1))
             .attr('fill', '#ddd')
 }
-
 
 /**
  * Iterates for each .race-result div and fills the colors in dependent on the race results
@@ -229,7 +255,6 @@ function fillCircle() {
             "border": fillColor
         })
     })
-
     $('.race-total').each(function() {
         switch ($(this).hasClass('race-total--dem')) {
             case true:
@@ -245,14 +270,14 @@ function fillCircle() {
 /**
  * Calculates the randomized delay of animation for each spinner
  * Value will generally be between 25 - 125 ms
- * @param  int d data of specific arc, though we are NOT using this value
- * @param  int i index of the arc that we are currently iterating over
- * @return int   time in ms of how long the delay should last
+ * @param  int  d  data of specific arc, though we are NOT using this value
+ * @param  int  i  index of the arc that we are currently iterating over
+ * @return int     time in ms of how long the delay should last
  */
 function calculateDelay(d, i) {
-    // if the index % 3 = 0, we know that we're iterating on the next arcs of the next spinner
+    // if the index % 13 = 0, we know that we're iterating on the next arcs of the next spinner
     // therefore we want to set the delay to a new random number
-    if(i % 13 === 0)  // since we start at i = 0, this will intialize our random num
+    if(i % 13 === 0)  // mod by 13 since we have our 3 sections of the pie and our 10 arcs for the guides
         randomDelay = (Math.floor(Math.random() * 5) + 1) * 25; 
     return randomDelay;
 }
@@ -260,21 +285,21 @@ function calculateDelay(d, i) {
 /**
  * Calculates the randomized time of spinning for each spinner
  * Value will generally be between 3500 - 5000ms 
- * @param  int d data of specific arc, though we are NOT using this value
- * @param  int i index of the arc that we are currently iterating over
- * @return int   time in ms of how long the spinning animation should last
+ * @param  int  d  data of specific arc, though we are NOT using this value
+ * @param  int  i  index of the arc that we are currently iterating over
+ * @return int     time in ms of how long the spinning animation should last
  */
 function calculateDuration(d, i) {
     if(i % 13 === 0)
-        randomDuration = (Math.floor(Math.random() * 15) + 1) * durationStep + 3500 // we want this to be between 3500-5000
+        randomDuration = (Math.floor(Math.random() * 15) + 1) * durationStep + minTime // we want this to be between 3500-5000
     return randomDuration;
 }
 
 /**
  * Computes the keyframes between two points
  *     Makes sure that the ending rotational position of the spinner is accurate to the ticker
- * @param  int d  data value of the arc that we are iterating on 
- * @param  int i  index of the arc that is currently iterating over
+ * @param  int  d   data value of the arc that we are iterating on 
+ * @param  int  i   index of the arc that is currently iterating over
  * @return tweenFunction that interpolates angles between the start/end point
  */
 function angleTween(d, i) {
@@ -290,26 +315,41 @@ function angleTween(d, i) {
 }
 
 /**
+ * Computes the keyframes between two points of the the needle ticking
+ * @param  int  d   data value of the arc that we are iterating on 
+ * @param  int  i   index of the arc that is currently iterating over
+ * @return tweenFunction that interpolates angles between the start/end point
+ */
+function angleTweenNeedle(d, i) {
+    // to calculate the end rotation of the spinner: 
+    // we need to interpolate between two positions....
+    var i = d3.interpolate(0, -90); 
+    return function(t) {
+        return 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ")rotate(" + i(t) + ")";
+    };
+}
+
+/**
  * Given a random integer, calculates the offset angle to rotate the spinner by
  *     in order for the chosen arc of the pie to be centered on the leftmost side
- * @param  object d    representative of the entire state object 
- * @param  int rand    a random integer between 1 and 100
- * @param  str $id     the id representative of the spinner
+ * @param  object   d       representative of the entire state object 
+ * @param  int      rand    a random integer between 1 and 100
+ * @param  str      $id     the id representative of the spinner
  * @return {"party" : string, "angle" : int}      party, the political party; angle, the offset angle
  */
 function calculateOffsetAngle(d, rand, $id) {
     var a;
     var party;
 
+      // if democrat
     if (rand < d.value[0].probability) {
         a = 270 - (d.value[0].probability * 1.8); // we want our slice to be centered at the 270 degree mark, so 270 - (percentage of pie * 360)
         party = "democrat"
-    }
+    } // if republican
     else if (rand < d.value[0].probability + d.value[1].probability) {
         a = 270 - (d.value[1].probability * 1.8) - (d.value[0].probability * 3.6)
         party = "republican"
-    }
-
+    } // otherwise, if other
     else if(rand <= d.value[0].probability + d.value[1].probability + d.value[0].probability + d.value[2].probability) {
         a = 270 - (d.value[2].probability * 1.8) - (d.value[0].probability * 3.6 + d.value[1].probability * 3.6)
         party = "other"
