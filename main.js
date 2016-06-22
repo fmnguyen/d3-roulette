@@ -34,7 +34,7 @@ var pie = d3.layout.pie()
     .value(function(d){ return d.probability })
     .sort(null);
 
-d3.json('/data/test.json', function(error, data) {
+d3.json('/d3-roulette/data/test.json', function(error, data) {
     if(error) throw error;
 
     var g; 
