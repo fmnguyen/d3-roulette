@@ -34,7 +34,7 @@ var pie = d3.layout.pie()
     .value(function(d){ return d.probability })
     .sort(null);
 
-d3.json('/d3-roulette/data/test.json', function(error, data) {
+d3.json('/data/test.json', function(error, data) {
     if(error) throw error;
 
     var g; 
@@ -321,8 +321,9 @@ function angleTween(d, i) {
  * @return tweenFunction that interpolates angles between the start/end point
  */
 function angleTweenNeedle(d, i) {
-    // to calculate the end rotation of the spinner: 
+    // to calculate the end rotation of the spinner: 0
     // we need to interpolate between two positions....
+    // 0 and 90 degrees every 360 / 10 * time seconds 
     var i = d3.interpolate(0, -90); 
     return function(t) {
         return 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ")rotate(" + i(t) + ")";
