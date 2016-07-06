@@ -1,0 +1,617 @@
+{
+	"states": [
+		{
+			"abbreviation": "AL",
+			"state": "Alabama",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "ID",
+			"state": "Idaho",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "MS",
+			"state": "Mississippi",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "MT",
+			"state": "Montana",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "NE",
+			"state": "Nebraska",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "OK",
+			"state": "Oklahoma",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "SC",
+			"state": "South Carolina",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "TN",
+			"state": "Tennessee",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "TX",
+			"state": "Texas",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "WY",
+			"state": "Wyoming",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "WV",
+			"state": "West Virginia",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "ME",
+			"state": "Maine",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 0.5
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99.5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "SD",
+			"state": "South Dakota",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "KY",
+			"state": "Kentucky",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 2
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 98
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "AR",
+			"state": "Arkansas",
+			"race-category": "republican",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 11
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 89
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "NC",
+			"state": "North Carolina",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 71
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 29
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "NH",
+			"state": "New Hampshire",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 66
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 34
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "KS",
+			"state": "Kansas",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 49
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 51
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "AK",
+			"state": "Arkansas",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 34
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 66
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "GA",
+			"state": "Georgia",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 33
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 67
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "IA",
+			"state": "Iowa",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 31
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 69
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "CO",
+			"state": "Colorado",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 20
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 80
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "LA",
+			"state": "Louisiana",
+			"race-category": "competetive",
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 15
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 85
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "DE",
+			"state": "Delaware",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "MA",
+			"state": "Massachusetts",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "NJ",
+			"state": "New Jersey",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "OR",
+			"state": "Oregon",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "NM",
+			"state": "New Mexico",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "MI",
+			"state": "Michigan",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 95
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 5
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "HI",
+			"state": "Hawaii",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "RI",
+			"state": "Rhode Island",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "IL",
+			"state": "Illinois",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "MN",
+			"state": "Minnesota",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 99
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 1
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}, {
+			"abbreviation": "VA",
+			"state": "Virginia",
+			"race-category": "democratic", 
+			"value" : [
+                                {
+                                        "party": "democrat",
+                                        "probability": 97
+                                },
+                                {
+                                        "party": "republican",
+                                        "probability": 3
+                                },
+                                {
+                                        "party": "other",
+                                        "probability": 0
+                                }
+                        ]
+		}
+	]
+}

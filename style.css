@@ -27,7 +27,7 @@
 }
 
 .needle {
-	transform-origin: right bottom 0;
+	transform-origin: 3px center 0;
 }
 
 /* to add line underneath titles since border-bottom looks bad
@@ -53,6 +53,7 @@ h4 {
 	color: #333;
 	position: absolute;
 	top: 50%;
+	left: 9px;
 	transform: translate(0, -50%);
 }
 
@@ -63,12 +64,12 @@ h4 {
 }
 
 .small-spinner:nth-child(odd) {
-	padding: 10px 0;
+	/*padding: 10px 0;*/
 	float:right;
 }
 
 .small-spinner:nth-child(even) {
-	padding: 10px 0;
+	/*padding: 10px 0;*/
 }
 
 .race-result {
@@ -77,7 +78,7 @@ h4 {
 	width: 10px;
 	border-radius: 10px;
 	position: absolute;
-	left: 36px;
+	left: 44px;
 	top: 50%;
 	transform: translate(0, -50%);
 	transition: all 0.3s ease;
@@ -100,7 +101,14 @@ h4 {
 	font-size: 24px;
 	letter-spacing: 0.5px;
 	display: inline-block;
-	margin-left: 400px;
+	margin-left: 45%;
+	vertical-align: top;
+}
+
+.button-container {
+	display: inline-block;
+	vertical-align: top;
+    margin-left: 20%;
 }
 
 .race-total--dem {
@@ -118,4 +126,48 @@ h4 {
 .spinner-svg-guides {
 	position: absolute; 
 	left: 0;
+}
+
+
+
+.spin-button {
+	-moz-box-shadow:inset 0px 2px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 2px 0px 0px #ffffff;
+	box-shadow:inset 0px 2px 0px 0px #ffffff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+	background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-size:13px;
+	font-weight:bold;
+	padding:10px 50px;
+	text-decoration:none;
+	text-shadow:0px 1px 50px #ffffff;
+}
+.spin-button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+	background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+	background-color:#f6f6f6;
+}
+.spin-button:active {
+	position:relative;
+	top:1px;
+}
+.spin-button:focus {
+	outline: none;
 }

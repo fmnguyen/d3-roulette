@@ -16,10 +16,12 @@ var durationStep = 50; // steps are in ms
 
 // Other initializing variables
 var offsetAngle = {};
+var animationDuration = {};
+var animationDelay = {};
 var raceTotals = {'democrat': 0, 'republican': 0, 'other': 0}
 
 var width = containerWidth / 2 - margin.right, // or 100 for testing
-    height = 85, // height is actually what determines the size of our spinner (since it is always smaller than width)
+    height = 76, // height is actually what determines the size of our spinner (since it is always smaller than width)
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
@@ -27,14 +29,14 @@ var color = d3.scale.ordinal()
     .range(["#405d98", "#c40f3a", "#578857"]);
 
 var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 30);
+    .outerRadius(radius - 12)  // changes the big radius of each of our pie arcs
+    .innerRadius(radius - 26); // changes the smaller radius of the inner of our pie
 
 var pie = d3.layout.pie()
     .value(function(d){ return d.probability })
     .sort(null);
 
-d3.json('/d3-roulette/data/test.json', function(error, data) {
+d3.json('/d3-roulette/data/data_full_altered.json', function(error, data) {
     if(error) throw error;
 
     var g; 
@@ -43,43 +45,46 @@ d3.json('/d3-roulette/data/test.json', function(error, data) {
     // iterate over each state, and make a div + svg for each
     // Adds the state's short-form name and builds a spinner for each state
     for (var i = 0 ; i < data.states.length; i ++) {
+        var abbreviation = data.states[i].abbreviation.replace(/\s+/g, '');
+        abbreviation = abbreviation.replace(/[()]/g, '');
+
         switch (data.states[i]['race-category']) {
-            case "democrat":
+            case "democratic":
                 d3.select('#race-democrat')
                     .append('div').attr('class', 'small-spinner')
-                    .attr('id', data.states[i].abbreviation)
+                    .attr('id', abbreviation)
                     .datum(data.states[i])
                     .append('span')
-                        .text(data.states[i].abbreviation)
+                        .text(abbreviation)
                         .attr('class', 'spinner-state-name')
                 break;
             case "competetive":
                 d3.select('#race-competetive')
                     .append('div').attr('class', 'small-spinner')
-                    .attr('id', data.states[i].abbreviation)
+                    .attr('id', abbreviation)
                     .datum(data.states[i])
                     .append('span')
-                        .text(data.states[i].abbreviation)
+                        .text(abbreviation)
                         .attr('class', 'spinner-state-name')
                 break;
             case "republican": 
                 d3.select('#race-republican')
                     .append('div').attr('class', 'small-spinner')
-                    .attr('id', data.states[i].abbreviation)
+                    .attr('id', abbreviation)
                     .datum(data.states[i])
                     .append('span')
-                        .text(data.states[i].abbreviation)
+                        .text(abbreviation)
                         .attr('class', 'spinner-state-name')
                 break;
         }
 
         // appends a new div to fill in with color that represents the race result
-        d3.select('#' + data.states[i].abbreviation)
+        d3.select('#' + abbreviation)
             .append('div')
             .attr('class', 'race-result')
 
         // appends a new svg for each state
-        svg = d3.select('#' + data.states[i].abbreviation)
+        svg = d3.select('#' + abbreviation)
             .append('svg')
             .attr('class', 'spinner-svg spinner-svg-body')
             .attr({'width': width, 'height': height}) 
@@ -88,7 +93,7 @@ d3.json('/d3-roulette/data/test.json', function(error, data) {
         g = svg.selectAll(".arc").data(pie(data.states[i].value))
             .enter().append('g')
             .attr('class', 'arc')
-            .attr('data-key', data.states[i].abbreviation)
+            .attr('data-key', abbreviation)
             .attr("transform", "translate(" + (width / 2 + 30)  + "," + height / 2 + ")");
         
         // polyfill for each arc color    
@@ -97,18 +102,20 @@ d3.json('/d3-roulette/data/test.json', function(error, data) {
             .style("fill", function(d, i) { return color(i); });
 
         // appends a new svg container that will hold our ticker/needle
-        var svgNeedle = d3.select('#' + data.states[i].abbreviation)
+        var svgNeedle = d3.select('#' + abbreviation)
             .append('svg')
             .attr('class', 'spinner-svg spinner-svg-needle')
+            .attr('data-key', abbreviation)
             .attr({'width': width / 2, 'height': height / 2})
-            .style('left', (width / 4 - 22.5 + 7))
-            .style('top', (height / 2 - 10 ))
+            .attr('transform', 'rotate('  +  45 +" " + width / 2 + " " + height / 2 +')')
+            .style('left', (width / 4 - 22.5 + 13))
+            .style('top', (height / 2 - 18 ))
 
         // group element and circle of the needle that we are going to rotate with our animation function
         svgNeedle = svgNeedle.append('g')
             .attr('class', 'needle')
-            .attr('transform', 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ')rotate(' + (0) + ')')
-            //.attr('transform-origin', 'center center 0') // this sets where we are rotating our needle from
+            .attr('transform', 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ')')
+            .attr('transform-origin', 'left center 0') // this sets where we are rotating our needle from
 
         // draws the larger needle path
         svgNeedle.append('path')
@@ -122,12 +129,10 @@ d3.json('/d3-roulette/data/test.json', function(error, data) {
                 .attr('r', 2)
                 .attr('cx', 4) // this 4 offsets the circle so that it is the 'eye' of the needle
                 .attr('cy', 4)
-                // .attr('cx', 65)
-                // .attr('cy', height / 2 + 1)
                 .attr('fill', '#ddd')
 
         // draws the 10 marks that divide the circle
-        drawGuides(data.states[i].abbreviation);
+        drawGuides(abbreviation);
 
     }
 });
@@ -166,14 +171,6 @@ $('.spin-button').click(function(e) {
         raceTotals[chosen]++;
     }) 
 
-    // start our ticker animation
-    d3.selectAll('.needle')
-        .transition()
-        .duration(5000) // this will have to be getting a value from a map
-        .delay(25)      // same with this too
-        .ease('cubic-in-out')
-        .attrTween('transform', angleTweenNeedle)
-
     // start our spinning animation
     d3.selectAll('.arc')
         .transition()
@@ -183,12 +180,33 @@ $('.spin-button').click(function(e) {
         .attrTween('transform', angleTween) // this also handles our x/y translations of the charts
         .each("end", fillCircle)
 
+    // start our ticker animation
+    d3.selectAll('.spinner-svg-needle')
+        .transition()
+        .duration(function(){  // to find duration : avgRotationTime / 10 / 2, 10 for each tick mark, and 2 since the animation is split into up + down
+            avgRotationTime = (animationDuration[this.getAttribute('data-key')] / numRotation);
+            return numAnimateCycle / 10 / 2;
+        })
+        .delay(function(){     // same with this too
+            return animationDelay[this.getAttribute('data-key')];
+        })      
+        .ease('cubic-in-out')
+        .styleTween('transform', animateNeedleUp)
+        .each('end', function(){
+            d3.select(this).transition()
+                .duration(function(){  // to find duration : avgRotationTime / 10 / 2, 10 for each tick mark, and 2 since the animation is split into up + down
+                    avgRotationTime = (animationDuration[this.getAttribute('data-key')] / numRotation);
+                    return numAnimateCycle / 10 / 2;
+                })
+                .ease('linear')
+                .styleTween('transform', animateNeedleDown)
+        })
 });
 
-function styleTween(transition, name, value) {
-  transition.styleTween(name, function() {
-    return d3.interpolate(this.style[name], value);
-  });
+function pulse() {
+    (function repeat() {    
+
+    })();
 }
 
 /**
@@ -198,30 +216,25 @@ function styleTween(transition, name, value) {
  */
 function drawGuides($id) {
 
-    var d = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10] // dummy data to split the pie 10 ways
-    var temp_pie = d3.layout.pie()
-        .value(function(d){ return d })
-        .sort(null);
-    var temp_arc = d3.svg.arc()
-        .outerRadius(radius - 19)
-        .innerRadius(radius - 30);
-
+    // appends a new svg group that we will use to spin + animate the guides
     var s = d3.select('#' + $id)
         .append('svg')
         .attr('class', 'spinner-svg spinner-svg-guides')
         .attr({'width': width, 'height': height}) 
 
-    // draws the pie with each states values
-    var group = s.selectAll(".arc").data(temp_pie(d))
-        .enter().append('g')
+    // draws group associated with the center path
+    var group = s.append('g')
         .attr('class', 'arc guide')
         .attr('data-key', $id)
         .attr("transform", "translate(" + (width / 2 + 30)  + "," + height / 2 + ")");
 
-    // polyfill for each arc color    
-    group.append("path")
-        .attr("d", temp_arc)
-        .style("fill", 'transparent');
+    // appends the corresponding path to creating the internal spinner
+    //  data/credit for the path comes from http://www.nytimes.com/newsgraphics/2014/senate-model/
+    group.append('path')
+        .attr('d', 'M0,-20L0,-12M11.756,-16.18L7.053,-9.708M19.021,-6.18L11.413,-3.708M19.021,6.18L11.413,3.708M11.756,16.18L7.053,9.708M0,20L0,12M-11.756,16.18L-7.053,9.708M-19.021,6.18L-11.413,3.708M-19.021,-6.18L-11.413,-3.708M-11.756,-16.18L-7.053,-9.708')
+        .attr('stroke', 'white')
+        .style('fill', 'transparent')
+        .attr('transform', 'scale(1.0)')
 
     // appends the circle that is at the center of the spinner (exists only for aesthetics)
     s.append('g')
@@ -229,7 +242,7 @@ function drawGuides($id) {
         .append('circle')
             .attr('r', 3)
             .attr('cx', (width / 2 + 30))
-            .attr('cy', (height / 2 + 1))
+            .attr('cy', (height / 2 + 0.5))
             .attr('fill', '#ddd')
 }
 
@@ -277,8 +290,9 @@ function fillCircle() {
 function calculateDelay(d, i) {
     // if the index % 13 = 0, we know that we're iterating on the next arcs of the next spinner
     // therefore we want to set the delay to a new random number
-    if(i % 13 === 0)  // mod by 13 since we have our 3 sections of the pie and our 10 arcs for the guides
-        randomDelay = (Math.floor(Math.random() * 5) + 1) * 25; 
+    if(i % 4 === 0)  // mod by 4 since we have our 3 sections of the pie and our 1 arc for the guides
+        randomDelay = (Math.floor(Math.random() * 10) + 1) * 45; 
+    animationDelay[this.getAttribute('data-key')] = randomDelay;
     return randomDelay;
 }
 
@@ -290,8 +304,9 @@ function calculateDelay(d, i) {
  * @return int     time in ms of how long the spinning animation should last
  */
 function calculateDuration(d, i) {
-    if(i % 13 === 0)
+    if(i % 4 === 0)
         randomDuration = (Math.floor(Math.random() * 15) + 1) * durationStep + minTime // we want this to be between 3500-5000
+    animationDuration[this.getAttribute('data-key')] = randomDuration;
     return randomDuration;
 }
 
@@ -320,13 +335,20 @@ function angleTween(d, i) {
  * @param  int  i   index of the arc that is currently iterating over
  * @return tweenFunction that interpolates angles between the start/end point
  */
-function angleTweenNeedle(d, i) {
+function animateNeedleUp(d, i) {
     // to calculate the end rotation of the spinner: 0
     // we need to interpolate between two positions....
     // 0 and 90 degrees every 360 / 10 * time seconds 
-    var i = d3.interpolate(0, -90); 
+    var i = d3.interpolate(0, -45); 
     return function(t) {
-        return 'translate(' + (width / 4 - 3.5) + ',' + (height / 4 - 3.5) + ")rotate(" + i(t) + ")";
+        return 'rotate(' + i(t) + 'deg)';
+    };
+}
+
+function animateNeedleDown(d, i) {
+    var i = d3.interpolate(-45, 0); 
+    return function(t) {
+        return 'rotate(' + i(t) + 'deg)';
     };
 }
 
@@ -343,11 +365,11 @@ function calculateOffsetAngle(d, rand, $id) {
     var party;
 
       // if democrat
-    if (rand < d.value[0].probability) {
+    if (rand <= d.value[0].probability) {
         a = 270 - (d.value[0].probability * 1.8); // we want our slice to be centered at the 270 degree mark, so 270 - (percentage of pie * 360)
         party = "democrat"
     } // if republican
-    else if (rand < d.value[0].probability + d.value[1].probability) {
+    else if (rand <= d.value[0].probability + d.value[1].probability) {
         a = 270 - (d.value[1].probability * 1.8) - (d.value[0].probability * 3.6)
         party = "republican"
     } // otherwise, if other
