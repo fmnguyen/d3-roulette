@@ -104,12 +104,12 @@ h4 {
 	font-size: 24px;
 	letter-spacing: 0.5px;
 	display: inline-block;
-	margin-left: 120px;
+	float: right;
 }
 
 .button-container {
 	display: inline-block;
-	transform: translate(0, 25%);
+	float: left;
 }
 
 .race-total--dem {
@@ -130,6 +130,10 @@ h4 {
 }
 
 
+h3 {
+	margin: 0;
+	line-height: 38px;
+}
 
 .spin-button {
 	-moz-box-shadow:inset 0px 2px 0px 0px #ffffff;
@@ -172,3 +176,18 @@ h4 {
 .spin-button:focus {
 	outline: none;
 }
+
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
